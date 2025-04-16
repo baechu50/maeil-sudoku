@@ -1,10 +1,13 @@
 services:
   backend:
-    build: ./apps/backend
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
     ports:
-      - "3000:3000"
-    volumes:
-      - ./apps/backend:/app
+      - "4000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/sudoku
     depends_on:
       - mongo
   mongo:
