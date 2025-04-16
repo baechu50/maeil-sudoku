@@ -1,4 +1,4 @@
-type SudokuBoard = number[][];
+export type SudokuBoard = number[][];
 export type DifficultyLevel = "easy" | "medium" | "hard";
 
 export interface GetSudokuResponse {
