@@ -7,18 +7,44 @@ dist/
 build/
 .next/
 out/
+.pnp
+.pnp.*
+*.tsbuildinfo
+
+# Testing
+coverage/
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # Env files
 .env
+.env.*
 .env.local
 .env.production
 .env.development
 
-# OS/IDE
+# Yarn & PnP
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Vercel
+.vercel
+
+# IDEs / OS
 .DS_Store
 .vscode/
 .idea/
+
+# Next.js
+next-env.d.ts
+
+# Misc
+*.pem
