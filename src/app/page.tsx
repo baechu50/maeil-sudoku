@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchSudoku } from "@/app/lib/api";
-import { SudokuBoard } from "@shared-types/sudoku";
+import { SudokuBoard } from "@/types/sudoku";
 
 export default function HomePage() {
   const [board, setBoard] = useState<SudokuBoard>(
@@ -39,7 +39,7 @@ export default function HomePage() {
                 onClick={() => setSelectedCell([rowIdx, colIdx])}
                 className={`w-10 h-10 flex items-center justify-center text-sm cursor-pointer select-none ${
                   isSelected ? "bg-blue-100" : "bg-white"
-                } ${colIdx % 3 === 2 && colIdx !== 8 ? "border-r-1" : ""} ${
+                } ${colIdx % 3 === 2 && colIdx !== 8 ? "border-r-2" : ""} ${
                   rowIdx % 3 === 2 && rowIdx !== 8 ? "border-b-1" : ""
                 }
                 }`}

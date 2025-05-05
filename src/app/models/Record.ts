@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { DifficultyLevel } from "@shared-types/sudoku";
+import { DifficultyLevel } from "@/types/sudoku";
 
 export interface IRecord extends Document {
   userId?: string; // optional for 비회원
@@ -28,4 +28,5 @@ const RecordSchema = new Schema<IRecord>(
 
 RecordSchema.index({ userId: 1, date: 1, difficulty: 1 });
 
-export default mongoose.model<IRecord>("Record", RecordSchema);
+export default mongoose.models.Record ||
+  mongoose.model<IRecord>("Record", RecordSchema);

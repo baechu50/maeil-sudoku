@@ -1,4 +1,4 @@
-import { SudokuBoard } from "@shared-types/sudoku";
+import { SudokuBoard } from "@/types/sudoku";
 import { SUDOKU_DIFFICULTY, BOARD_SIZE } from "./constants";
 
 type Difficulty = keyof typeof SUDOKU_DIFFICULTY;

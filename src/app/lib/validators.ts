@@ -1,4 +1,5 @@
 import { parseISO, isValid } from "date-fns";
+import { SudokuBoard } from "@/types/sudoku";
 
 export const isValidDate = (str: string): boolean => {
   const parsed = parseISO(str); // '2025-04-15'
@@ -9,7 +10,7 @@ export const isValidDifficulty = (val: string): boolean => {
   return ["easy", "medium", "hard"].includes(val);
 };
 
-export const isValidBoard = (board: any): boolean => {
+export const isValidBoard = (board: SudokuBoard): boolean => {
   if (!Array.isArray(board) || board.length !== 9) return false;
   return board.every(
     (row) =>

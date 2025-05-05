@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { SudokuBoard } from "@shared-types/sudoku";
+import { SudokuBoard } from "@/types/sudoku";
 
 export interface ISudoku extends Document {
   date: string;
@@ -24,4 +24,5 @@ const SudokuSchema = new Schema<ISudoku>(
 
 SudokuSchema.index({ date: 1, difficulty: 1 }, { unique: true });
 
-export default mongoose.model<ISudoku>("Sudoku", SudokuSchema);
+export default mongoose.models.Sudoku ||
+  mongoose.model<ISudoku>("Sudoku", SudokuSchema);

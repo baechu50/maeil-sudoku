@@ -1,7 +1,6 @@
 import axios from "axios";
-import { GetSudokuResponse, PostSudokuRequest } from "@shared-types/sudoku";
+import { GetSudokuResponse, PostSudokuRequest } from "@/types/sudoku";
 
-// axios 인스턴스 생성
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
