@@ -1,14 +1,19 @@
 import axios from "axios";
 import { GetSudokuResponse, PostSudokuRequest } from "@shared-types/sudoku";
 
+// axios 인스턴스 생성
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
 export const fetchSudoku = async (date: string, difficulty: string) => {
-  const res = await axios.get<GetSudokuResponse>(
+  const res = await api.get<GetSudokuResponse>(
     `/api/sudoku?date=${date}&difficulty=${difficulty}`
   );
   return res.data.board;
 };
 
 export const submitSudoku = async (data: PostSudokuRequest) => {
-  const res = await axios.post("/api/sudoku", data);
+  const res = await api.post("/api/sudoku", data);
   return res.data;
 };
