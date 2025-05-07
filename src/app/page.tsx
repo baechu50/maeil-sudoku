@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchSudoku } from "@/app/lib/api";
 import { useSudokuBoard } from "@/app/hooks/useSudokuBoard";
 import { useSudokuValidation } from "@/app/hooks/useSudokuValidation";
@@ -19,8 +19,9 @@ export default function HomePage() {
     highlightArea,
   } = useSudokuBoard(Array.from({ length: 9 }, () => Array(9).fill(0)));
 
-  const { conflictCells, isBoardFull } = useSudokuValidation(board);
+  const { conflictCells } = useSudokuValidation(board);
   const { time, start, stop } = useTimer();
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
@@ -37,7 +38,19 @@ export default function HomePage() {
         <div className="flex items-center justify-center gap-2">
           <div className="text-xl font-mono">{time}</div>
           <button
-            onClick={stop}
+            onClick={() => {
+              start();
+              setIsPaused(false);
+            }}
+            className="px-2 py-1 text-sm rounded border bg-gray-100 hover:bg-gray-200"
+          >
+            시작
+          </button>
+          <button
+            onClick={() => {
+              stop();
+              setIsPaused(true);
+            }}
             className="px-2 py-1 text-sm rounded border bg-gray-100 hover:bg-gray-200"
           >
             정지
@@ -46,30 +59,37 @@ export default function HomePage() {
       </div>
 
       {/* 보드 */}
-      <div className="grid grid-cols-9 gap-px bg-black w-fit mx-auto border-2">
-        {board.map((row, rowIdx) =>
-          row.map((cell, colIdx) => {
-            const cellClasses = getCellClasses(
-              rowIdx,
-              colIdx,
-              cell,
-              selectedCell,
-              highlightNumber,
-              highlightArea,
-              initialBoard,
-              conflictCells
-            ).join(" ");
+      <div className="relative">
+        <div className="grid grid-cols-9 gap-px bg-black w-fit mx-auto border-2">
+          {board.map((row, rowIdx) =>
+            row.map((cell, colIdx) => {
+              const cellClasses = getCellClasses(
+                rowIdx,
+                colIdx,
+                cell,
+                selectedCell,
+                highlightNumber,
+                highlightArea,
+                initialBoard,
+                conflictCells
+              ).join(" ");
 
-            return (
-              <div
-                key={`${rowIdx}-${colIdx}`}
-                className={cellClasses}
-                onClick={() => handleCellSelect(rowIdx, colIdx)}
-              >
-                {cell !== 0 ? cell : ""}
-              </div>
-            );
-          })
+              return (
+                <div
+                  key={`${rowIdx}-${colIdx}`}
+                  className={cellClasses}
+                  onClick={() => handleCellSelect(rowIdx, colIdx)}
+                >
+                  {cell !== 0 ? cell : ""}
+                </div>
+              );
+            })
+          )}
+        </div>
+        {isPaused && (
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <span className="text-white text-xl">일시정지</span>
+          </div>
         )}
       </div>
 
@@ -78,8 +98,9 @@ export default function HomePage() {
         {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
           <button
             key={n}
-            onClick={() => handleNumberInput(n)}
+            onClick={() => !isPaused && handleNumberInput(n)}
             className={getNumberPadClass(board, n)}
+            disabled={isPaused}
           >
             {n}
           </button>
@@ -90,17 +111,27 @@ export default function HomePage() {
       <div className="flex justify-center gap-4 mt-4">
         <button
           className="px-4 py-2 rounded border text-sm bg-gray-100 hover:bg-gray-200"
-          onClick={handleCellClear}
+          onClick={() => !isPaused && handleCellClear()}
+          disabled={isPaused}
         >
           삭제
         </button>
-        <button className="px-4 py-2 rounded border text-sm bg-gray-100 hover:bg-gray-200">
+        <button
+          className="px-4 py-2 rounded border text-sm bg-gray-100 hover:bg-gray-200"
+          disabled={isPaused}
+        >
           메모
         </button>
-        <button className="px-4 py-2 rounded border text-sm bg-gray-100 hover:bg-gray-200">
+        <button
+          className="px-4 py-2 rounded border text-sm bg-gray-100 hover:bg-gray-200"
+          disabled={isPaused}
+        >
           되돌리기
         </button>
-        <button className="px-4 py-2 rounded border text-sm bg-yellow-100 hover:bg-yellow-200">
+        <button
+          className="px-4 py-2 rounded border text-sm bg-yellow-100 hover:bg-yellow-200"
+          disabled={isPaused}
+        >
           힌트
         </button>
       </div>
