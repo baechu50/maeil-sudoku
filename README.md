@@ -16,12 +16,17 @@
 ## 📁 프로젝트 구조
 
 ```
-maeil-sudoku/
-    ├── apps/
-    │ ├── backend/ # Express + MongoDB (API 서버)
-    │ └── frontend/ # Next.js (프론트엔드)
-    ├── packages/
-    │ └── types/ # 백엔드/프론트 공유 타입
+maeil-sudoku-next/
+    ├── src/
+    │   ├── app/           # Next.js App Router (프론트 + API 라우트)
+    │   │   ├── api/       # API 라우트 (ex. /api/sudoku)
+    │   │   ├── lib/       # 유틸리티, 퍼즐 생성, 검증 등
+    │   │   ├── models/    # Mongoose 모델
+    │   │   └── page.tsx   # 메인 페이지 (수도쿠 UI)
+    │   └── types/         # 타입 정의 (공유 타입)
+    ├── public/            # 정적 파일
+    ├── .env.local         # 환경변수 (MongoDB 등)
+    └── ...
 ```
 
 <br>
@@ -32,21 +37,24 @@ maeil-sudoku/
 # 루트에서 설치
 npm install
 
-# 백엔드 실행
-cd apps/backend
+# 개발 서버 실행
 npm run dev
 
-# 프론트엔드 실행
-cd apps/frontend
-npm run dev
+# 브라우저에서 http://localhost:3000 접속
 ```
+
+- MongoDB는 로컬에서 도커로 띄우거나, Atlas 등 외부 인스턴스를 사용하세요.
+- 환경변수 예시 (`.env.local`):
+  ```
+  MONGO_URI=mongodb://localhost:27017/sudoku
+  ```
 
 <br>
 
 ## 🧑‍💻 기술 스택
 
-| 분야       | 기술                              |
-| ---------- | --------------------------------- |
-| 프론트엔드 | Next.js, Tailwind CSS, TypeScript |
-| 백엔드     | Express, MongoDB, Mongoose        |
-| 인프라     | Docker, Vercel, GitHub Actions    |
+| 분야          | 기술                                          |
+| ------------- | --------------------------------------------- |
+| 프론트/백엔드 | Next.js, Tailwind CSS, TypeScript, API Routes |
+| DB            | MongoDB, Mongoose                             |
+| 인프라        | Docker, Vercel, GitHub Actions                |
